@@ -23,13 +23,20 @@ var floodFill = function (image, sr, sc, newColor) {
   const origin = [sr, sc];
   const queues = [origin];
   const visited = new Set();
-  visited.add(origin);
 
-  function addQueue(array) {
+  function fillColor(array) {
     const [i, j] = array;
     // 边界点，或者是当前颜色和对标颜色不等，直接返回
     if (i < 0 || i >= m || j < 0 || j >= n || image[i][j] !== originColor)
       return;
+
+    const key = JSON.stringify(array);
+
+    // 已经遍历过返回
+    if (visited.has(key)) return;
+    // 添加遍历
+    visited.add(key);
+    // 填充颜色
     image[i][j] = newColor;
     // 其他往上下左右对标
     queues.push([i + 1, j]);
@@ -40,14 +47,8 @@ var floodFill = function (image, sr, sc, newColor) {
 
   while (queues.length) {
     const queue = queues.shift();
-    // 没有遍历过加入队列
-    if (!visited.has(queue)) {
-      visited.add(queue);
-      // 判断填充颜色
-      addQueue(queue);
-    } else if (queue === origin) {
-      addQueue(queue);
-    }
+    fillColor(queue);
   }
+  return image;
 };
 // @lc code=end

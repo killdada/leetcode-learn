@@ -23,6 +23,7 @@ var dailyTemperatures = function (temperatures) {
   // 75 76
   // 76
   // 76 73
+  // 上面的注释说明，每一次入栈，都需要把栈顶一个个取出，如果栈顶元素小于当前需要入栈的元素，说明这个温度更高，栈顶出栈（记录当前的值），并且继续比较下一个栈顶（因为需要统计天数，我们的栈都存储的是下标方便统计计算）
   if (!temperatures.length) return [];
   if (temperatures.length === 1) return [0];
   // stack直接记录下标,后续value,可以通过下标拿 (下标的好处是方便计算最后的天数)

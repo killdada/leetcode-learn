@@ -23,8 +23,8 @@ var updateMatrix = function (mat) {
       // 记录二维数组里面所有为0的最短距离，最短距离都是0
       if (mat[i][j] === 0) {
         res[i][j] = 0;
-        // 为0的都如队列，然后以这个0遍历他的上下左右节点，, slice 0 只是个clone
-        queues.push([i, j].slice(0));
+        // 为0的都入队列，然后以这个0遍历他的上下左右节点，, slice 0 只是个clone
+        queues.push([i, j]);
       }
     }
   }
@@ -51,13 +51,11 @@ var updateMatrix = function (mat) {
         let posX = x + xx;
         let posY = y + yy;
         // 必须在边界内，
-        if (
-          !(posX < 0 || posX > m || posY < 0 || posY > n) &&
-          res[posX][posY] === -1
-        ) {
-          // 边界内
+        if (posX < 0 || posX >= m || posY < 0 || posY >= n) continue;
+        // -1代表之前没有进行过赋值计算
+        if (res[posX][posY] === -1) {
           res[posX][posY] = num;
-          queues.push([posX, posY].slice(0));
+          queues.push([posX, posY]);
         }
       }
     }
@@ -65,3 +63,7 @@ var updateMatrix = function (mat) {
   return res;
 };
 // @lc code=end
+
+// @after-stub-for-debug-begin
+module.exports = updateMatrix;
+// @after-stub-for-debug-end

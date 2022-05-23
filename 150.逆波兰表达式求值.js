@@ -13,10 +13,13 @@ var evalRPN = function (tokens) {
   let stack = [];
   for (let i = 0; i < tokens.length; i++) {
     const token = tokens[i];
+    // 数字直接入栈
     if (!["+", "-", "*", "/"].includes(token)) {
+      // 注意转数字
       stack.push(Number(token));
       continue;
     }
+    // 非数字，取出二个栈顶，计算值，然后把计算后的值推入栈
     const last = stack.pop();
     const last1 = stack.pop();
     let res;
@@ -39,8 +42,10 @@ var evalRPN = function (tokens) {
       default:
         break;
     }
+    // 计算后的值入栈
     stack.push(res);
   }
+  // 最后出栈就是我们需要的值
   return stack.pop();
 };
 
